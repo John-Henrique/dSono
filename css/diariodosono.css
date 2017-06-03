@@ -1,0 +1,398 @@
+/*
+ * Custom CSS style for Phonon components
+ * It is also possible to use Stylus
+ * by changing values in _variables.styl
+ * then execute gulp css-all
+ */
+/*
+ * App Pages
+ */
+.app-page {
+  background-color: #fff;
+}
+/*
+ * Header Bars
+ */
+.header-bar {
+  background-color: #0084e7;
+}
+.header-bar .title {
+  color: #fff;
+}
+.header-bar .btn {
+  color: #fff;
+}
+/*
+ * Dialogs
+ */
+.dialog {
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px #8a8a8a;
+}
+/*
+ * Tabs
+ */
+.tabs {
+  background-color: #fff;
+}
+.tabs .tab-items .tab-item {
+  color: #0084e7;
+}
+.tabs .tab-indicator {
+  margin-bottom: -3px;
+  height: 3px;
+  background-color: #0084e7;
+}
+/*
+ * Panels
+ */
+.panel,
+.panel-full {
+  background-color: #fff;
+}
+/*
+ * Side Panels
+ */
+.side-panel {
+  background-color: #333;
+}
+.side-panel .list li {
+  border-color: #444;
+}
+.side-panel .list a,
+.side-panel .list li,
+.side-panel .list .title,
+.side-panel .list .body {
+  color: #fff;
+}
+.side-panel .list a:active,
+.side-panel .list li:active,
+.side-panel .list .title:active,
+.side-panel .list .body:active {
+  background-color: item-background-active;
+}
+.side-panel .header-bar {
+  background-color: transparent;
+}
+.side-panel .header-bar .title {
+  color: side-panel-title-color;
+}
+.side-panel .header-bar .btn {
+  color: #fff;
+}
+.checkbox span,
+.radio span {
+  border: 2px solid #ddd;
+}
+.checkbox :checked + span,
+.radio :checked + span {
+  border-color: #0084e7;
+}
+/*
+ * Preloaders
+ */
+.circle-progress {
+  width: 36px;
+  height: 36px;
+  margin-left: -18px;
+}
+.circle-progress.active .spinner {
+  border-top: 3px solid #0084e7;
+  border-right: 3px solid #0084e7;
+  border-bottom: 3px solid #0084e7;
+  border-left: 3px solid #eee;
+  -webkit-animation: circleLoading 900ms infinite linear;
+          animation: circleLoading 900ms infinite linear;
+}
+.circle-progress.primary .spinner {
+  border-top: 3px solid #0084e7;
+  border-right: 3px solid #0084e7;
+  border-bottom: 3px solid #0084e7;
+}
+.circle-progress.negative .spinner {
+  border-top: 3px solid #f40b00;
+  border-right: 3px solid #f40b00;
+  border-bottom: 3px solid #f40b00;
+}
+.circle-progress.positive .spinner {
+  border-top: 3px solid #0ae700;
+  border-right: 3px solid #0ae700;
+  border-bottom: 3px solid #0ae700;
+}
+.progress {
+  height: 6px;
+}
+.progress .determinate {
+  background-color: #0084e7;
+}
+.progress.primary .determinate {
+  background-color: #0067b5 !important;
+}
+.progress.negative .determinate {
+  background-color: #c20900 !important;
+}
+.progress.positive .determinate {
+  background-color: #08b500 !important;
+}
+/*
+ * Notifications
+ */
+.notification {
+  width: notification-width;
+  min-height: 48px;
+  line-height: 54px;
+  padding: 0 24px;
+  color: #fff;
+  background-color: #333;
+  -webkit-transform: translate3d(0, 72px, 0);
+          transform: translate3d(0, 72px, 0);
+  -webkit-transition: opacity 200ms, -webkit-transform 0.3s;
+  transition: opacity 200ms, -webkit-transform 0.3s;
+  transition: transform 0.3s, opacity 200ms;
+  transition: transform 0.3s, opacity 200ms, -webkit-transform 0.3s;
+}
+.notification .btn {
+  top: 6px;
+  height: 42px;
+  line-height: 42px;
+}
+/*
+ * Colors
+ */
+.btn.primary,
+.btn.positive,
+.btn.negative {
+  color: #fff !important;
+}
+.primary {
+  background-color: #0084e7 !important;
+}
+.primary.btn-flat {
+  color: #0084e7 !important;
+  background-color: transparent !important;
+}
+.positive {
+  background-color: #0ae700 !important;
+}
+.positive.btn-flat {
+  color: #0ae700 !important;
+  background-color: transparent !important;
+}
+.negative {
+  background-color: #f40b00 !important;
+}
+.negative.btn-flat {
+  color: #f40b00 !important;
+  background-color: transparent !important;
+}
+.light-primary {
+  background-color: #b9d3e7 !important;
+}
+.light-positive {
+  background-color: #bbe7b9 !important;
+}
+.light-negative {
+  background-color: #f4c5c3 !important;
+}
+.dark-primary {
+  background-color: #0067b5 !important;
+}
+.dark-positive {
+  background-color: #08b500 !important;
+}
+.dark-negative {
+  background-color: #c20900 !important;
+}
+
+
+/**
+PERSONALIZADO
+*/
+.bloco {
+	background-color:#0084E7;
+	border-radius:5px;
+	padding:1px 0px 1px 0px;
+}
+.hover {
+	background-color:#0C78D1;
+}
+.text-white, .text-white p {
+	color:#fff;
+}
+.avatar {
+	border-radius:50%;
+}
+p.objetivo {
+	color:#f1f1f1;
+}
+principal .avatar, perfil .avatar {
+	width:70%;
+	height:70%;
+	border:#0C78D1 10px solid;
+}
+.header-bar .avatar {
+	width:50px;
+	height:50px;
+	padding:5px 3px 3px 3px;
+	border:none;
+}
+.content, .tab-content {
+	padding-bottom:100px;
+}
+.tab-content .btn-salvar {
+    margin-bottom: 100px;
+}
+
+/**
+	ELEMENTOS DO LAYOUT
+*/
+
+/* cor de fundo dos blocos */
+.background {
+	background-color:#0084E7;
+}
+/* cor dos links dentro dos li */
+li.background a {
+	color:#fff;
+}
+.arredondar-topo {
+	border-radius: 10px 10px 0px 0px;
+	-moz-border-radius: 10px 10px 0px 0px;
+	-webkit-border-radius: 10px 10px 0px 0px;
+}
+.arredondar-rodape {
+	border-radius: 0px 0px 10px 10px;
+	-moz-border-radius: 0px 0px 10px 10px;
+	-webkit-border-radius: 0px 0px 10px 10px;
+}
+
+/* navegação dos botões anterior e proximo */
+.navegacao {
+    position:absolute;
+    bottom:15px;
+    width:90%;
+}
+.navegacao a {
+	padding-top:15px;
+}
+.swiper-button-next, .swiper-button-prev {
+    top: 90%;
+}
+/* fixando a paginação no rodape */
+.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {
+    position: fixed;
+}
+
+
+/**
+	ICONES
+*/
+.icon-perfil:before {
+	/*content:url('../img/avatar.jpg' );*/
+}
+.icon-diario:before {
+	content:url( '../img/icon-diario.png' );
+}
+.icon-qualidade:before {
+	content:url( '../img/icon-qualidade.png' );
+}
+.icon-sobre:before {
+	content:url( '../img/icon-sobre.png' );
+}
+.icon-configuracoes:before {
+	content:url( '../img/icon-configuracoes.png' );
+}
+.icon-enviar:before {
+	content:url( '../img/icon-enviar.png' );
+}
+.icon-diurna:before {
+	content:url( '../img/icon-diurna.png' );
+}
+.icon-insonia:before {
+	content:url( '../img/icon-insonia.png' );
+}
+.icon-apneia:before {
+	content:url( '../img/icon-apneia.png' );
+}
+.icon-sonolencia:before {
+	content:url( '../img/icon-sonolencia.png' );
+}
+.icon-Cochilo:before {
+	content:url( '../img/icon-cochilo.png' );
+	content:url( '../img/icon-cochilo-b.png' );
+}
+.icon-Trabalho:before {
+	content:url( '../img/icon-trabalho.png' );
+	content:url( '../img/icon-trabalho-b.png' );
+}
+.icon-Estudo:before {
+	content:url( '../img/icon-estudo.png' );
+	content:url( '../img/icon-estudo-b.png' );
+}
+.icon-Alimentacao:before {
+	content:url( '../img/icon-alimentacao.png' );
+	content:url( '../img/icon-alimentacao-b.png' );
+}
+.icon-Atividade:before {
+	content:url( '../img/icon-atividade.png' );
+	content:url( '../img/icon-atividade-b.png' );
+}
+.icon-Atividade-fisica:before {
+	content:url( '../img/icon-atividade-fisica.png' );
+	content:url( '../img/icon-atividade-fisica-b.png' );
+}
+.icon-Transporte:before {
+	content:url( '../img/icon-transporte.png' );
+	content:url( '../img/icon-transporte-b.png' );
+}
+.icon-manha:before {
+	content:url( '../img/icon-manha-a.png' );
+}
+.icon-tarde:before {
+	content:url( '../img/icon-tarde-a.png' );
+}
+.icon-noite:before {
+	content:url( '../img/icon-noite-a.png' );
+}
+.icon-madrugada:before {
+	content:url( '../img/icon-madrugada-a.png' );
+}
+
+/**
+	CAMPOS
+*/
+input.hora, input.hora-noite {
+	text-align:center;
+}
+
+textarea {
+	height:100px;
+	background-color:#fcfcfc;
+}
+
+/**
+	QUESTÕES
+*/
+.esconder, .esconde {
+	display:none;
+}
+/* capitalizar as opções de resposta */
+.questao .list li span.text {
+	/*
+    text-transform: capitalize;
+	*/
+}
+
+/**
+	TELAS
+*/
+/* TELA DIARIO ATIVIDADE */
+.atividades { 
+	padding-top:5px;
+}
+.atividades button.primary {
+	min-height:28px;
+	margin-bottom:6px;
+	font-size:12px;
+}
