@@ -5,7 +5,12 @@ phonon.options({
         enableBrowserBackButton: true,
         templateRootDirectory: './telas'
     },
-    i18n: null // for this example, we do not use internationalization
+
+    i18n: { // i18n: null if you do not want to use internationalization
+        directory: 'idiomas/',
+        localeFallback: 'pt-BR',
+        localePreferred: 'pt-BR'
+    }
 });
 
 var app = phonon.navigator();

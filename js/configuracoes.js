@@ -11,8 +11,25 @@ $(function(){
 			});
 			
 			
+			$( '.idioma' ).click( function(){
+				console.log( "idioma clicado");
+				configuracoes.idioma( this );
+			});
 			
 		},
+		
+		
+		idioma: function( ele ){
+			
+			var lang = $( ele ).data( 'l' );
+			if(lang) {
+				phonon.updateLocale(lang);
+				console.log( "change language to "+ lang );
+			}else{
+				console.log( "language not change");
+			}
+		},
+		
 		
 		
 		respostas: function(){

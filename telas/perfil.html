@@ -2,7 +2,7 @@
     <header class="header-bar">
 		<a href="#!principal" class="btn pull-left icon icon-arrow-back"></a>
 		
-		<button class="btn pull-left">Configurações</button>
+		<button class="btn pull-left"  data-i18n="text: perfil"></button>
     </header>
     <div class="content">
 		
@@ -16,12 +16,13 @@
 				<br>
 				<br>
 				<br>
-				<img src="img/avatar.jpg" class="avatar" />
-				
-				<h3>John-Henrique</h3>
+				<!--
+				<img src="img/avatar.png" class="avatar" />
+				-->
+				<h3 class="perfil-nome"></h3>
 			
-				<p>Eu quero...</p>
-				<p class="objetivo">Melhorar minhas noites de sono</p>
+				<p data-i18n="text: eu_quero"></p>
+				<p class="objetivo" data-i18n="text: objetivo"></p>
 			</div>
 			
 		</div>
@@ -31,36 +32,36 @@
 		<div class="padded-full">
 		
 			<div class="padded-top"></div>
-			<input type="text" name="nome" class="campo nome-pacitente" placeholder="Seu nome completo">
+			<input type="text" name="nome" class="campo nome-paciente" data-i18n="text: nome">
 			
 			<div class="padded-top"></div>
 			
 			<div class="padded-top"></div>
-			<p>Data de nascimento</p>
-			<input type="date"  name="nascimento" class="campo nascimento data" placeholder="Data de nascimento">
+			<p data-i18n="text: nascimento">Data de nascimento</p>
+			<input type="date"  name="nascimento" class="campo nascimento data" data-i18n="text: nascimento">
 			
 			<div class="padded-top"></div>
-			<p>Você é...</p>
+			<p data-i18n="text: voce_e">Você é...</p>
 				<ul class="list">
 					<li class="padded-for-list">
 						<label class="radio">
 							<input type="radio" name="sexo" value="Homem" class="questao-3-muito-bom campo">
 							<span></span>
-							<span class="text">Homem</span>
+							<span class="text" data-i18n="text: homem"></span>
 						</label>
 					</li>
 					<li class="padded-for-list">
 						<label class="radio">
 							<input type="radio" name="sexo" value="Mulher" class="questao-3-bom campo">
 							<span></span>
-							<span class="text">Mulher</span>
+							<span class="text" data-i18n="text: mulher"></span>
 						</label>
 					</li>
 				</ul>
 			
 			
 			<div class="padded-bottom"></div>
-			<button class="btn btn-salvar fit-parent primary">Salvar informações</button>
+			<button class="btn btn-salvar fit-parent primary" data-i18n="text: salvar"></button>
 		</div>
 		
     </div>
