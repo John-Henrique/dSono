@@ -1,5 +1,15 @@
 $(function(){
 	
+	document.on('pageopened', function(evt) {
+		///console.log(evt.detail.page + ' is opened for the first time (created)');
+		
+		setTimeout(function(){
+			currentPage = phonon.navigator().currentPage;
+			console.log( currentPage );
+			$( currentPage +' .swiper-button-next, '+ currentPage +' .swiper-button-prev' ).hide();
+		}, 1500);
+	});
+	
 });
 
 var mySwiper = '';

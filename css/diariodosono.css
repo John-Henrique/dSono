@@ -277,7 +277,6 @@ li.background a {
 	padding-top:15px;
 }
 .swiper-button-next, .swiper-button-prev {
-    top: 90%;
 }
 /* fixando a paginação no rodape */
 .swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {

@@ -12,7 +12,7 @@ $(function(){
 			
 			
 			$( '.idioma' ).click( function(){
-				console.log( "idioma clicado");
+				//console.log( "idioma clicado");
 				configuracoes.idioma( this );
 			});
 			
@@ -24,9 +24,9 @@ $(function(){
 			var lang = $( ele ).data( 'l' );
 			if(lang) {
 				phonon.updateLocale(lang);
-				console.log( "change language to "+ lang );
+				//console.log( "change language to "+ lang );
 			}else{
-				console.log( "language not change");
+				//console.log( "language not change");
 			}
 		},
 		
