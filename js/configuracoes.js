@@ -24,9 +24,12 @@ $(function(){
 			var lang = $( ele ).data( 'l' );
 			if(lang) {
 				phonon.updateLocale(lang);
-				//console.log( "change language to "+ lang );
+				
+				localStorage.setItem( 'idioma', lang );
+				console.log( "change language to "+ lang );
 			}else{
-				//console.log( "language not change");
+				console.log( "language not change");
+				//phonon.updateLocale( localStorage.getItem( 'idioma' ) );
 			}
 		},
 		

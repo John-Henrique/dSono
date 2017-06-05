@@ -317,7 +317,7 @@ li.background a {
 .icon-sonolencia:before {
 	content:url( '../img/icon-sonolencia.png' );
 }
-.icon-Cochilo:before {
+.icon-Cochilo:before, .icon-Sono:before {
 	content:url( '../img/icon-cochilo.png' );
 	content:url( '../img/icon-cochilo-b.png' );
 }

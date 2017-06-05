@@ -229,7 +229,7 @@ app.on({page: 'enviar', preventClose: true, content: 'enviar.html', readyDelay: 
 		$( 'enviar .btn-salvar' ).click( function(){
 			
 			document.addEventListener( 'deviceready', function(){
-				gera_relatios();
+				gera_relatorios();
 			});
 		});
 	});
@@ -274,6 +274,13 @@ app.on({page: 'perfil', preventClose: true, content: 'perfil.html', readyDelay: 
 		});
 	});
 });
+
+
+lang = localStorage.getItem( 'idioma' );
+if( lang ){
+	console.log( lang );
+	phonon.updateLocale( lang );
+}
 
 // Let's go!
 app.start();

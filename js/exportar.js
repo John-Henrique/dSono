@@ -69,7 +69,7 @@ $(function(){
 								
 								if( exportar.enviar_email ){
 									//console.log( "Preparando email");
-									//exportar.email( fileEntry, fileName );
+									exportar.email( fileEntry, fileName );
 								}
 							};
 

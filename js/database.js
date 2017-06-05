@@ -149,6 +149,43 @@ function criaTabelas(){
 
 
 
+	/*
+	 * Verifica se o email do doutor foi adicionado
+	 * @return Retorna o email do médico ou false se não existe
+	 * */
+	function perfil_doutor( ){
+
+		database.transaction( function( tx ){
+			
+			tx.executeSql(  "SELECT option_name, option_value "+
+							"FROM ds_options "+
+							"WHERE option_name='email-medico' "+
+							"AND option_value != '' "+
+							"ORDER BY option_id ASC "+
+							"LIMIT 1"
+							,[], 
+			function( tx, res ){
+					
+				quantidade = res.rows.length;
+				
+				phonon.notif( "email: "+ res.rows.item( 0 ).option_value, 10000, false );
+				if( quantidade > 1 ){
+					return res.rows.item( 0 ).option_value;
+				}else{
+					return false;
+				}
+			}, 
+			function(tx, res){
+				navigator.notification.alert( 'ERRO perfil_doutor '+ res.code +' '+ res.message );
+			}); 
+			
+		}, function(erro){
+			navigator.notification.alert("SQLite: consulta perfil_doutor "+ erro.code +" : "+ erro.message );
+		}, function(){
+			///navigator.notification.alert("SQLite: consulta realizada");
+		});
+	}
+	
 	
 	/*
 	 * Lista as configurações já registradas 
@@ -248,14 +285,22 @@ function criaTabelas(){
 	 * Gera relatórios fisicos 
 	 * para enviar ao médico
 	 * */
-	function gera_relatios(){
-		gera_relatorio_apneia();
-		gera_relatorio_sobre_sono();
-		gera_relatorio_qualidade_sono();
-		gera_relatorio_diario_atividade();
-		gera_relatorio_gravidade_insonia();
-		gera_relatorio_sonolencia_diurna();
-		gera_relatorio_preferencia_diurna();
+	function gera_relatorios(){
+		
+		email_medico = perfil_doutor();
+		
+		if( email_medico != false ){
+			gera_relatorio_apneia();
+			gera_relatorio_sobre_sono();
+			gera_relatorio_qualidade_sono();
+			gera_relatorio_diario_atividade();
+			gera_relatorio_gravidade_insonia();
+			gera_relatorio_sonolencia_diurna();
+			gera_relatorio_preferencia_diurna();
+			
+		}else{
+			phonon.notif( "Você precisa informar o email do médico, vá para Configurações.", 10000, false );
+		}
 	}
 
 
@@ -294,7 +339,7 @@ function criaTabelas(){
 					
 					d = new Date();
 					
-					exportar.sql( salvar, 'preferencia-diurna'+ (d.getMonth()+1) +'-'+ d.getFullYear() +'.txt', false );
+					exportar.sql( salvar, 'preferencia-diurna-'+ (d.getMonth()+1) +'-'+ d.getFullYear() +'.txt', false );
 					//console.log( salvar );
 					
 				
@@ -348,7 +393,7 @@ function criaTabelas(){
 					
 					d = new Date();
 					
-					exportar.sql( salvar, 'graviade-insonia'+ (d.getMonth()+1) +'-'+ d.getFullYear() +'.txt', false );
+					exportar.sql( salvar, 'gravidade-insonia-'+ (d.getMonth()+1) +'-'+ d.getFullYear() +'.txt', false );
 					//console.log( salvar );
 					
 				
@@ -401,7 +446,7 @@ function criaTabelas(){
 					
 					d = new Date();
 					
-					exportar.sql( salvar, 'sonolencia-diurna'+ (d.getMonth()+1) +'-'+ d.getFullYear() +'.txt', false );
+					exportar.sql( salvar, 'sonolencia-diurna-'+ (d.getMonth()+1) +'-'+ d.getFullYear() +'.txt', false );
 					//console.log( salvar );
 					
 				
@@ -453,7 +498,7 @@ function criaTabelas(){
 					
 					d = new Date();
 					
-					exportar.sql( salvar, 'qualidade-sono'+ (d.getMonth()+1) +'-'+ d.getFullYear() +'.txt', false );
+					exportar.sql( salvar, 'qualidade-sono-'+ (d.getMonth()+1) +'-'+ d.getFullYear() +'.txt', false );
 					//console.log( salvar );
 					
 				
@@ -505,7 +550,7 @@ function criaTabelas(){
 					
 					d = new Date();
 					
-					exportar.sql( salvar, 'apneia'+ (d.getMonth()+1) +'-'+ d.getFullYear() +'.txt', false );
+					exportar.sql( salvar, 'apneia-'+ (d.getMonth()+1) +'-'+ d.getFullYear() +'.txt', false );
 					//console.log( salvar );
 					
 				
@@ -558,7 +603,7 @@ function criaTabelas(){
 					
 					d = new Date();
 					
-					exportar.sql( salvar, 'sobre-sono'+ (d.getMonth()+1) +'-'+ d.getFullYear() +'.txt', false );
+					exportar.sql( salvar, 'sobre-sono-'+ (d.getMonth()+1) +'-'+ d.getFullYear() +'.txt', false );
 					//console.log( salvar );
 					
 				

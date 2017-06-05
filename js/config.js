@@ -5,14 +5,14 @@ $(function(){
 		app_name: "Diariodosono", 
 		
 		// URL para o servidor
-		servidor: 'http://appserverbr.com',
+		servidor: 'https://condorreports.com',
 		
 		
 		init: function(){
 			
 			// sempre que uma requisição Ajax for iniciada
 			$( document ).ajaxSend(function(){
-				config.validade();
+				//config.validade();
 			});
 		},
 		

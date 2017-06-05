@@ -21,7 +21,7 @@ $(function(){
 						
 						// indica que um relatório está em execução
 						sessionStorage.setItem( 'relatorio', 1 );
-						gera_relatios();
+						gera_relatorios();
 						phonon.notif( "Enviando relatório", 5000, true );
 						
 				}
@@ -61,17 +61,17 @@ $(function(){
 				window.resolveLocalFileSystemURL( cordova.file.externalRootDirectory, function (dirEntry) {
 					
 					
-					// Criando o diretório "Sincronize" para armazenar o arquivo
-					fs.root.getDirectory( 'Sincronize', { create: true, exclusive: false }, function(){
-						////$( '.relatorio' ).html( "Diretorio Sincronize criado <BR>"+ $( '.relatorio' ).html( ) );
+					// Criando o diretório "Diariodosono" para armazenar o arquivo
+					fs.root.getDirectory( 'Diariodosono', { create: true, exclusive: false }, function(){
+						////$( '.relatorio' ).html( "Diretorio Diariodosono criado <BR>"+ $( '.relatorio' ).html( ) );
 					}, function(){
-						alert( "erro ao criar diretório Sincronize");
+						alert( "erro ao criar diretório Diariodosono");
 					});
 					
 					//coletor.falha( "CriaArquivo OK ");
 					//$( '.status' ).html( JSON.stringify( dirEntry ) );
 					var isAppend = false; // Não deve incrementar arquivo, sempre deve reescrever
-					anexo.createFile(dirEntry, "Sincronize/relatorio-actograma-"+ parseInt( new Date().getMonth() + 1) + new Date().getFullYear() +".txt", isAppend);
+					anexo.createFile(dirEntry, "Diariodosono/relatorio-actograma-"+ parseInt( new Date().getMonth() + 1) + new Date().getFullYear() +".txt", isAppend);
 				}, function(e){
 					phonon.notif( "ANEXO ERROR ao criar arquivo: "+ JSON.stringify( e ), 10000, true );
 				});
@@ -154,22 +154,29 @@ $(function(){
 					//window.resolveLocalFileSystemURL( cordova.file.externalRootDirectory, function (dirEntry) {
 					//dirEntry = cordova.file.externalRootDirectory;
 					dirEntry = fs.root;
+					dados = parseInt( new Date().getMonth() + 1) + new Date().getFullYear();
 					
-					dirEntry.getFile( "Sincronize/relatorio-actograma-"+ parseInt( new Date().getMonth() + 1) + new Date().getFullYear() +".txt", { create: true, exclusive: false }, function (fileEntry){
+					arquivos = [
+						"apneia-"+ dados +".txt",
+						"atividade-"+ dados +".txt",
+						"gravidade-insonia"+ dados +".txt",
+						"preferencia-diurna-"+ dados +".txt",
+						"qualidade-sono-"+ dados +".txt",
+						"sobre-sono-"+ dados +".txt",
+						"sonolencia-diurna-"+ dados +".txt",
+					];
+					$.each( arquivos, function( index, arquivo ){
 						
+						dirEntry.getFile( "Diariodosono/"+ arquivo, { create: true, exclusive: false }, function (fileEntry){
+							
+							anexo.upload( fileEntry, cordova.file.externalRootDirectory +"Diariodosono/"+ arquivo );
+							
+						}, function(e){
+							alert( "erro ao localizar arquivo "+ JSON.stringify( e ) );
+						});
 						
-						//$( '.status' ).html( JSON.stringify( dirEntry.nativeURL +"Sincronize/relatorio-actograma-"+ parseInt( new Date().getMonth() + 1) +".txt" ) );
-						//$( '.status' ).html( "Acesso do arquivo "+ JSON.stringify( fileEntry ) );
-						
-						//$( '.arquivo' ).val( dirEntry.nativeURL +"Sincronize/relatorio-actograma-"+ parseInt( new Date().getMonth() + 1) +".txt" );
-						
-						anexo.upload( fileEntry, cordova.file.externalRootDirectory +"Sincronize/relatorio-actograma-"+ parseInt( new Date().getMonth() + 1) + new Date().getFullYear() +".txt" );
-						
-					}, function(e){
-						alert( "erro ao localizar arquivo "+ JSON.stringify( e ) );
 					});
 					
-				
 				}, function(){
 					alert( "erro permissão");
 					phonon.preloader( '.circle-progress' ).hide();
@@ -257,7 +264,7 @@ $(function(){
 			};
 			
 			// SERVER must be a URL that can handle the request, like
-			url = config.api() +"/v1/upload";
+			url = config.api() +"/upload";
 			ft.upload(fileURL, encodeURI( url ), success, fail, options);
 		},
 		
@@ -272,7 +279,7 @@ $(function(){
 			
 			phonon.preloader( '.circle-progress' ).show();
 			
-			url = config.api() +"/v1/upload-relatorio";
+			url = config.api() +"/upload-relatorio";
 			
 			$.ajax({
 				url: url, 
@@ -280,6 +287,7 @@ $(function(){
 				timeout: 30000,
 				data: {
 					app: config.app_name, 
+					medico: perfil_doutor()
 				}
 				
 			}).done(function(retorno){

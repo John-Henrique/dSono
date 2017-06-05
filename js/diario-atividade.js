@@ -7,6 +7,8 @@ $(function(){
 			$( '.atividades button' ).click(function(){
 				
 				atividade = $( this ).data( 'id' ).replace( ' ', '-' );
+				atividadeTexto = $( this ).text().replace( ' ', '-' );
+				//console.log( $( this ).text() );
 				
 				// remove a classe positive de todos os botões
 				$( '.atividades button' ).removeClass( 'negative' );
@@ -29,7 +31,8 @@ $(function(){
 					if( atividade != 'limpar' ){
 						
 						$( li ).find( 'a:first' ).removeClass( $( li ).find( 'a:first' ).prop( 'class' ) ).addClass( 'pull-right icon icon-'+ atividade );
-						$( li ).find( 'a:last span' ).text( ' - '+ atividade.replace( '-', ' ' ) );
+						//$( li ).find( 'a:last span' ).text( ' - '+ atividade.replace( '-', ' ' ) );
+						$( li ).find( 'a:last span' ).text( ' - '+ atividadeTexto.replace( '-', ' ' ) );
 					}else{
 						$( li ).find( 'a:first' ).removeClass( $( li ).find( 'a:first' ).prop( 'class' ) ).addClass( 'pull-right icon' );
 						$( li ).find( 'a:last span' ).text( '' );
