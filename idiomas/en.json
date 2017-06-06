@@ -1,7 +1,10 @@
 {
 	"opcao":"Options",
+	"enviar":"Send",
+	"observacoes":"If necessary add some comments about this submission",
+	"observacoes_placeholder":"Your observations",
 	"atividade_sobre":"About activity",
-	"diario":"Sleep diary",
+	"diario":"Activity diary",
 	"sobre-sono":"About sleep",
 	"qualidade-sono":"Sleep quality",
 	"enviar-diario":"Send diary",
@@ -216,9 +219,9 @@
 	"sonolencia7":"What is the possibility of you dozing or falling asleep sitting quietly after a lunch without alcohol?",
 	"sonolencia8":"What is the possibility of you dozing or falling asleep in a car, while stopped for a few minutes in the traffic?",
 	"sobre":"About sleep",
-	"sobre1":"What time did you lie down?",
+	"sobre1":"What time did you go to bed?",
 	"sobre2":"What time did you wake up?",
-	"sobre3":"Como você avalia seu sono da noite passada?",
+	"sobre3":"How do you rate your sleep last night?",
 	"muitoruim":"Very bad",
 	"regular":"Regular",
 	"ruim":"Bad",
@@ -227,7 +230,7 @@
 	"sobre4":"How easily did you fall asleep last nigh?",
 	"sobre5":"How easily did you wake up today?",
 	"sobre6":"How did you feel today at the beginning of your day?",
-	"sobre7":"Como você se sentiu hoje no fim do dia?",
+	"sobre7":"How did you feel today at the end of the day?",
 	"sobre8":"Do you remember waking up and sleeping again?",
 	"sobre9":"Did you wake up alone or were you awake by someone or the alarm clock?"
 }

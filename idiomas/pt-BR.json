@@ -1,5 +1,8 @@
 {
 	"opcao":"Opções",
+	"enviar":"Enviar",
+	"observacoes":"Se achar necessário adicione algumas observações sobre este envio",
+	"observacoes_placeholder":"Suas observações",
 	"atividade_sobre":"Atividade sobre...",
 	"diario":"Diário de atividades",
 	"sobre-sono":"Sobre o sono",
