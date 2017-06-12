@@ -1,8 +1,12 @@
 <diario-atividade data-page="true">
     <header class="header-bar">
+		<!-- 
 		<a href="#!principal" class="btn pull-left icon icon-arrow-back"></a>
+		-->
+		<button class="btn pull-left icon icon-arrow-back" data-navigation="principal"></button>
 		
 		<button class="btn pull-left" data-i18n="text: diario"></button>
+		<button class="btn pull-right icon icon-add calendario"></button>
     </header>
 	<nav class="tabs header-tabs">
 		<div class="tab-items">
@@ -23,6 +27,8 @@
 	</nav>
 	
 	<div class="content" data-tab-contents="true" data-disable-swipe="false" data-tab-default="1">
+	
+	
 		<div class="tab-content">
 			<div class="padded-top padded-bottom">
 					<div class="padded-full text-center atividades">
@@ -35,6 +41,9 @@
 						<button class="btn primary padded-bottom" data-id="limpar" data-i18n="text: limpar">Limpar</button>
 					</div>
 					
+					<div class="dia-hoje-display text-center">
+						<input type="date" readonly  class="calendario text-center" />
+					</div>
 				
 				<ul class="list horario">
 					<li class="background" data-hora="hora-0000">
@@ -94,6 +103,11 @@
 				
 				
 			</div>
+			
+			
+			<input type="date" class="dia-hoje" style="width:0px; height:0px" />
+			
+			
 		</div>
 		<div class="tab-content">
 			<div class="padded-top padded-bottom">
@@ -105,6 +119,11 @@
 						<button class="btn primary padded-bottom" data-id="Estudo" data-i18n="text: estudo">Estudo</button>
 						<button class="btn primary padded-bottom" data-id="Atividade-fisica" data-i18n="text: atividade_fisica">Atividade física</button>
 						<button class="btn primary padded-bottom" data-id="limpar" data-i18n="text: limpar">Limpar</button>
+					</div>
+					
+					<div class="dia-hoje-display text-center">
+						<input type="date" readonly  class="calendario text-center" />
+						
 					</div>
 					
 					
@@ -183,6 +202,12 @@
 						<button class="btn primary padded-bottom" data-id="limpar" data-i18n="text: limpar">Limpar</button>
 					</div>
 					
+					<div class="dia-hoje-display text-center">
+						<input type="date" readonly  class="calendario text-center" />
+						
+					</div>
+					
+					
 					
 				<ul class="list horario">
 					<li class="background" data-hora="hora-1200">
@@ -254,6 +279,11 @@
 						<button class="btn primary padded-bottom" data-id="Atividade-fisica" data-i18n="text: atividade_fisica">Atividade física</button>
 						<button class="btn primary padded-bottom" data-id="limpar" data-i18n="text: limpar">Limpar</button>
 					</div>
+					
+					<div class="dia-hoje-display text-center">
+						<input type="date" readonly class="calendario text-center" />
+					</div>
+					
 					
 				<ul class="list horario">
 					<li class="background" data-hora="hora-1800">

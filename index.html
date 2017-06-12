@@ -12,6 +12,41 @@
         <title>App</title>
     </head>
     <body>
+	
+	
+		<div class="dialog" data-cancelable="true" id="dialogo-diario-atividade">
+			<div class="content">
+				<div class="padded-full">
+					<h3 data-i18n="html: dialogo-diario-aviso">Diário de atividades</h3>
+					<p data-i18n="html: dialogo-diario-mensagem">Você precisa selecionar uma atividade antes de marcar a hora.</p>
+				</div>
+			</div>
+			<ul class="buttons">
+				<li><a class="btn btn-flat primary btn-confirm" data-dialog-close="true" data-i18n="html: ok">Ok</a></li>
+			</ul>
+		</div>
+		
+		
+		
+		<div class="dialog" data-cancelable="true" id="dialogo-diario-data">
+			<div class="content">
+				<div class="padded-full">
+					<h3 data-i18n="html: dialogo-diario-data"></h3>
+					<p data-i18n="html: dialogo-diario-data-mensagem"></p>
+					
+					<p>
+						<input type="date" class="data" value="" />
+					</p>
+				</div>
+			</div>
+			<ul class="buttons">
+				<li><a class="btn btn-flat primary btn-confirm" data-dialog-close="true" data-i18n="html: ok">Ok</a></li>
+			</ul>
+		</div>
+		
+		
+		
+		
 		
         <principal 			data-page="true" data-loader="true" data-nocache="true"></principal>
         <perfil 			data-page="true"></perfil>

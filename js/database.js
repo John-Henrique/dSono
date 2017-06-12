@@ -82,18 +82,24 @@ function criaTabelas(){
 			
 			tx.executeSql(  "SELECT ID "+
 							"FROM ds_posts "+
-							"WHERE post_date=? "+
+							"WHERE STRFTIME( '%Y-%m-%d', post_date )=? "+
 							"AND post_title=? "+
 							"AND post_type='diario' "+
-							"LIMIT 1 "
+							"LIMIT 3 "
 							, [data_hora, atividade], 
 			function( tx, res ){
 					
 				quantidade = res.rows.length;
+				//console.log( quantidade +' '+ data_hora +' '+ atividade );
+				sessao = ( sessionStorage.getItem( 'registros' ) == null )?0:sessionStorage.getItem( 'registros' );
+				sessionStorage.setItem( 'registros', parseInt( parseInt( sessao ) + 1 ) );
 				
-				if( quantidade > 1 ){
+				if( quantidade > 0 ){
+					//console.log( "Update "+ data_hora );
 					tx.executeSql('UPDATE ds_posts SET post_type=?, post_title=?, post_date=?, post_status=? WHERE post_date=?', ['diario', atividade, data_hora, 'publish', data_hora]);
 				}else{
+					
+					//console.log( "INSERT "+ data_hora );
 					tx.executeSql('INSERT INTO ds_posts (post_type, post_title, post_date, post_status) VALUES (?,?,?,?)', ['diario', atividade, data_hora, 'publish']);
 				}
 				
@@ -126,7 +132,7 @@ function criaTabelas(){
 					
 				quantidade = res.rows.length;
 				
-				if( quantidade > 1 ){
+				if( quantidade > 0 ){
 					
 					for( i=0; i < quantidade; i++ ){
 						
@@ -169,7 +175,7 @@ function criaTabelas(){
 				quantidade = res.rows.length;
 				
 				phonon.notif( "email: "+ res.rows.item( 0 ).option_value, 10000, false );
-				if( quantidade > 1 ){
+				if( quantidade > 0 ){
 					return res.rows.item( 0 ).option_value;
 				}else{
 					return false;
@@ -203,7 +209,7 @@ function criaTabelas(){
 					
 				quantidade = res.rows.length;
 				
-				if( quantidade > 1 ){
+				if( quantidade > 0 ){
 					
 					for( i=0; i < quantidade; i++ ){
 						
@@ -214,11 +220,11 @@ function criaTabelas(){
 				}
 			}, 
 			function(tx, res){
-				navigator.notification.alert( 'ERRO atividade_listar '+ res.code +' '+ res.message );
+				navigator.notification.alert( 'ERRO configuracoes_listar '+ res.code +' '+ res.message );
 			}); 
 			
 		}, function(erro){
-			navigator.notification.alert("SQLite: consulta atividade_listar "+ erro.code +" : "+ erro.message );
+			navigator.notification.alert("SQLite: consulta configuracoes_listar "+ erro.code +" : "+ erro.message );
 		}, function(){
 			///navigator.notification.alert("SQLite: consulta realizada");
 		});
@@ -234,38 +240,50 @@ function criaTabelas(){
 	 * @param data informar uma data válida 2017-05-28 sem hora
 	 * */
 	function atividade_listar( data ){
-
+		
+		if( data ){
+			data = data.substring( 0, 10 );
+		}
+		
+		//console.log( "hoje é "+ getDia() );
+		//console.log( "Data informada "+ data );
+		
 		database.transaction( function( tx ){
 			
-			tx.executeSql(  "SELECT ID, post_title, strftime( '%Y-%m-%d %H:%M', post_date ) AS hora1, post_date "+
+			tx.executeSql(  "SELECT ID, post_title, strftime( '%H%M', post_date ) AS hora1, STRFTIME( '%Y-%m-%d', post_date ) AS hora2, post_date "+
 							"FROM ds_posts "+
-							"WHERE /*strftime( '%Y-%m-%d', post_date )=?*/ "+ 
-							"/*AND*/ post_type=? "+
+							"WHERE STRFTIME( '%Y-%m-%d', post_date )= '"+ data +"' "+ 
+							"AND post_type=? "+
 							"ORDER BY post_date ASC "
-							,['diario'], 
+							,['diario' ], 
 			function( tx, res ){
 					
 				quantidade = res.rows.length;
-				//phonon.notif( "quantidade "+ quantidade, 3000, false );
+				phonon.notif( "quantidade "+ quantidade, 3000, false );
 				
-				if( quantidade > 1 ){
+				if( quantidade > 0 ){
 					
 					for( i=0; i < quantidade; i++ ){
 						
-						//li = $( 'diario-atividade li:contains("'+ res.rows.item( i ).post_date.substring( 11 ) +'")' );
-						li = $( 'diario-atividade li[data-hora="hora-'+ res.rows.item( i ).post_date.substring( 10 ).replace(':','') +'"]' );
+						li = $( 'diario-atividade li[data-hora="hora-'+ res.rows.item( i ).hora1 +'"]' );
 						
 						li.find( 'a:first' ).addClass( 'icon-'+ res.rows.item( i ).post_title );
+						console.log( res.rows.item( i ).hora1 +' '+ res.rows.item( i ).post_title );
 						
-						atividade = ' - '+ res.rows.item( i ).post_title;
-						if( atividade.length != 3 ){
-							li.find( 'a:last span' ).text( atividade );
-							//console.log( res.rows.item( i ).post_date.substring( 10 ) +' '+ res.rows.item( i ).post_title +' '+ res.rows.item( i ).post_date.substring( 10 ).replace(':','') );
+						if( res.rows.item( i ).post_title != "" ){
+							console.log( "title "+ res.rows.item( i ).post_title );
+							li.find( 'a:last span' ).text( ' - '+ res.rows.item( i ).post_title );
 						}
 					}
 					
 				}else{
 					// nada encontrado
+					li = $( 'diario-atividade .horario li' );
+					$.each( li, function( i, html ){
+						elemento = $( html );
+						elemento.find( 'a:first' ).removeClass( elemento.find( 'a:first' ).prop( 'class' ) ).addClass( 'pull-right icon' );
+						elemento.find( 'a:last span' ).text( '' );
+					});
 				}
 			}, 
 			function(tx, res){
@@ -745,7 +763,7 @@ function criaTabelas(){
 					
 				quantidade = res.rows.length;
 				
-				if( quantidade >= 1 ){
+				if( quantidade > 0 ){
 					tx.executeSql('UPDATE ds_options SET option_value=? WHERE option_name=?', [valor, chave]);
 				}else{
 					tx.executeSql('INSERT INTO ds_options (option_name, option_value) VALUES (?,?)', [chave, valor]);
@@ -784,7 +802,7 @@ function criaTabelas(){
 					
 				quantidade = res.rows.length;
 				
-				if( quantidade >= 1 ){
+				if( quantidade > 0 ){
 					tx.executeSql('UPDATE ds_options SET option_value=? WHERE option_name=?', [valor, chave]);
 				}else{
 					tx.executeSql('INSERT INTO ds_options (option_name, option_value) VALUES (?,?)', [chave, valor]);
@@ -826,7 +844,7 @@ function criaTabelas(){
 					
 				quantidade = res.rows.length;
 				
-				if( quantidade >= 1 ){
+				if( quantidade > 0 ){
 					tx.executeSql('UPDATE ds_posts SET post_type=?, post_title=?, post_date=?, post_content=? WHERE post_date=?', ['preferencia-diurna', questao, data_hora, resposta, data_hora]);
 				}else{
 					tx.executeSql('INSERT INTO ds_posts (post_type, post_title, post_date, post_status, post_content) VALUES (?,?,?,?,?)', ['preferencia-diurna', questao, data_hora, 'publish', resposta]);
@@ -869,7 +887,7 @@ function criaTabelas(){
 					
 				quantidade = res.rows.length;
 				
-				if( quantidade >= 1 ){
+				if( quantidade > 0 ){
 					tx.executeSql('UPDATE ds_posts SET post_type=?, post_title=?, post_date=?, post_content=? WHERE post_date=?', ['gravidade-insonia', questao, data_hora, resposta, data_hora]);
 				}else{
 					tx.executeSql('INSERT INTO ds_posts (post_type, post_title, post_date, post_status, post_content) VALUES (?,?,?,?,?)', ['gravidade-insonia', questao, data_hora, 'publish', resposta]);
@@ -913,7 +931,7 @@ function criaTabelas(){
 					
 				quantidade = res.rows.length;
 				
-				if( quantidade >= 1 ){
+				if( quantidade > 0 ){
 					tx.executeSql('UPDATE ds_posts SET post_type=?, post_title=?, post_date=?, post_content=? WHERE post_date=?', ['sonolencia-diurna', questao, data_hora, resposta, data_hora]);
 				}else{
 					tx.executeSql('INSERT INTO ds_posts (post_type, post_title, post_date, post_status, post_content) VALUES (?,?,?,?,?)', ['sonolencia-diurna', questao, data_hora, 'publish', resposta]);
@@ -956,7 +974,7 @@ function criaTabelas(){
 					
 				quantidade = res.rows.length;
 				
-				if( quantidade >= 1 ){
+				if( quantidade > 0 ){
 					tx.executeSql('UPDATE ds_posts SET post_type=?, post_title=?, post_date=?, post_content=? WHERE post_date=?', ['qualidade-sono', questao, data_hora, resposta, data_hora]);
 				}else{
 					tx.executeSql('INSERT INTO ds_posts (post_type, post_title, post_date, post_status, post_content) VALUES (?,?,?,?,?)', ['qualidade-sono', questao, data_hora, 'publish', resposta]);
@@ -1000,7 +1018,7 @@ function criaTabelas(){
 					
 				quantidade = res.rows.length;
 				
-				if( quantidade >= 1 ){
+				if( quantidade > 0 ){
 					tx.executeSql('UPDATE ds_posts SET post_type=?, post_title=?, post_date=?, post_content=? WHERE post_date=?', ['apneia', questao, data_hora, resposta, data_hora]);
 				}else{
 					tx.executeSql('INSERT INTO ds_posts (post_type, post_title, post_date, post_status, post_content) VALUES (?,?,?,?,?)', ['apneia', questao, data_hora, 'publish', resposta]);
@@ -1044,7 +1062,7 @@ function criaTabelas(){
 					
 				quantidade = res.rows.length;
 				
-				if( quantidade >= 1 ){
+				if( quantidade > 0 ){
 					tx.executeSql('UPDATE ds_posts SET post_type=?, post_title=?, post_date=?, post_content=? WHERE post_date=?', ['sobre-o-sono', questao, data_hora, resposta, data_hora]);
 				}else{
 					tx.executeSql('INSERT INTO ds_posts (post_type, post_title, post_date, post_status, post_content) VALUES (?,?,?,?,?)', ['sobre-o-sono', questao, data_hora, 'publish', resposta]);

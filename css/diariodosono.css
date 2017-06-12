@@ -237,7 +237,7 @@ principal .avatar, perfil .avatar {
 	padding:5px 3px 3px 3px;
 	border:none;
 }
-.content, .tab-content {
+body > .content, .content > .tab-content {
 	padding-bottom:100px;
 }
 .tab-content .btn-salvar {
@@ -282,6 +282,10 @@ li.background a {
 .swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {
     position: fixed;
 }
+/* definindo a altura 100% */
+.swiper-container {
+    height: 100vh;
+}
 
 
 /**
@@ -317,31 +321,31 @@ li.background a {
 .icon-sonolencia:before {
 	content:url( '../img/icon-sonolencia.png' );
 }
-.icon-Cochilo:before, .icon-Sono:before {
+.icon-Cochilo:before, .icon-Sono:before, .icon-Nap:before, .icon-Sleep:before {
 	content:url( '../img/icon-cochilo.png' );
 	content:url( '../img/icon-cochilo-b.png' );
 }
-.icon-Trabalho:before {
+.icon-Trabalho:before, .icon-Work:before {
 	content:url( '../img/icon-trabalho.png' );
 	content:url( '../img/icon-trabalho-b.png' );
 }
-.icon-Estudo:before {
+.icon-Estudo:before, .icon-Study:before {
 	content:url( '../img/icon-estudo.png' );
 	content:url( '../img/icon-estudo-b.png' );
 }
-.icon-Alimentacao:before {
+.icon-Alimentacao:before, .icon-Feeding:before {
 	content:url( '../img/icon-alimentacao.png' );
 	content:url( '../img/icon-alimentacao-b.png' );
 }
-.icon-Atividade:before {
+.icon-Atividade:before, .icon-Activity:before {
 	content:url( '../img/icon-atividade.png' );
 	content:url( '../img/icon-atividade-b.png' );
 }
-.icon-Atividade-fisica:before {
+.icon-Atividade-fisica:before, .icon-Physical-activity:before {
 	content:url( '../img/icon-atividade-fisica.png' );
 	content:url( '../img/icon-atividade-fisica-b.png' );
 }
-.icon-Transporte:before {
+.icon-Transporte:before, .icon-Transport:before {
 	content:url( '../img/icon-transporte.png' );
 	content:url( '../img/icon-transporte-b.png' );
 }
@@ -394,4 +398,11 @@ textarea {
 	min-height:28px;
 	margin-bottom:6px;
 	font-size:12px;
+}
+diario-atividade .dia-hoje-display input[type='date'] {
+    color: #0084e7;
+	width: 40%;
+    font-size: 20px;
+    padding: 0px;
+	border:none;
 }

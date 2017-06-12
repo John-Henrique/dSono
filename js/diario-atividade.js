@@ -4,6 +4,63 @@ $(function(){
 		
 		
 		init:function(){
+			
+			/**
+			 * garantinhdo que a consulta seja realizada 
+			 * sempre que a tela for carregada
+			 * */
+			document.on('pageopened', function(evt){
+				
+				if( phonon.navigator().currentPage == 'diario-atividade' ){
+					atividade_listar( sessionStorage.getItem( 'data' ) );
+				}
+			});
+			
+			
+			$( '.dia-hoje, .dia-hoje-display input' ).val( getDia() );
+			
+			
+			/**
+			 * Para exibir o calendário nativo 
+			 * basta dar click no campo, para 
+			 * isso, defini um botão 'calendario' 
+			 * na barra de titulo, quando clicar 
+			 * nele, abre o calendário nativo 
+			 * ao selecionar uma data neste calendario 
+			 * o campo .data-hoje guarda a data 
+			 * que será utilizada na hora de salvar
+			 * os dados
+			 **/
+			$( '.calendario' ).click( function(){
+				
+				/**
+				 * Campo de texto do tipo date
+				 **/
+				$( '.dia-hoje' ).click();
+			});
+			
+			
+			/**
+			 * Sempre que o valor do campo for alterado
+			 * iremos atualizar a informação da DIV 
+			 * para permitir que o usuário saiba 
+			 * que dia está sendo informado
+			 **/
+			$( '.dia-hoje' ).change(function(){
+				el 	= $( '.dia-hoje-display input' );
+				dia = $( '.dia-hoje' ).val();
+				
+				$.each( el, function(i, v){
+					$( v ).val( dia )
+					console.log( dia );
+				});
+				
+				sessionStorage.setItem( 'data', dia ); // Não sei onde está sendo utilizado
+				atividade_listar( dia );
+				
+			});
+			
+			
 			$( '.atividades button' ).click(function(){
 				
 				atividade = $( this ).data( 'id' ).replace( ' ', '-' );
@@ -19,6 +76,9 @@ $(function(){
 			
 			
 			
+			/**
+			 * Marca as atividades nos Lista
+			 **/
 			$( '.horario li' ).click(function(){
 				
 				// atalho para acessar o li clicado
@@ -37,6 +97,19 @@ $(function(){
 						$( li ).find( 'a:first' ).removeClass( $( li ).find( 'a:first' ).prop( 'class' ) ).addClass( 'pull-right icon' );
 						$( li ).find( 'a:last span' ).text( '' );
 					}
+				}else{
+					console.log( "nenhuma atividade selecionada");
+					/*
+					 * quando o usuário clicar em alguma 
+					 * hora sem ter escolhido uma atividade 
+					 * devemos informá-lo
+					 **/
+					var dialogo = phonon.dialog( "#dialogo-diario-atividade" ).open();
+					dialogo.on( 'confirm', function(){
+						$('.tab-content').animate({
+							scrollTop: 0
+						}, 1000);
+					});
 				}
 			});
 			
@@ -58,19 +131,21 @@ $(function(){
 					
 					
 					// Se hora possuir apenas 5 digitos
-					if( hora.length == 5 ){
-						d = new Date();
-						hora = d.getFullYear() +'-'+ parseInt( d.getMonth() + 1 ) +'-'+ d.getDate() +' '+ hora;
+					if( ( hora.length == 5 ) && ( sessionStorage.getItem( 'data' ) == null ) ){
+						hora = getDia() +' '+ hora;
+					}else{
+						hora = sessionStorage.getItem( 'data' );
 					}
 					
 					// salvar na base
-					//console.log( 'Hora: '+ hora +'  valor: '+ atividade );
+					console.log( index +' Hora: '+ hora +'  valor: '+ atividade );
+					// hora precisa estar no formado AAAA-MM-DD HH:MM
 					atividade_existe( hora, atividade );
 					
 				});
 				
 				phonon.notif( "Diário atualizado", 3000, false );
-				phonon.navigator().changePage( 'principal' );
+				//phonon.navigator().changePage( 'principal' );
 
 			});
 			

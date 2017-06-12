@@ -57,8 +57,7 @@ app.on({page: 'diario-atividade', preventClose: false, content: 'diario-atividad
 	activity.onReady(function(){
 		
 		document.addEventListener( 'deviceready', function(){
-			d = new Date();
-			atividade_listar( d.getFullYear() +'-'+ d.getMonth() +'-'+ d.getDate() );
+			atividade_listar( getDia() );
 		});
 	});
 });

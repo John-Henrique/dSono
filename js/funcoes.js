@@ -3,14 +3,37 @@ $(function(){
 	document.on('pageopened', function(evt) {
 		///console.log(evt.detail.page + ' is opened for the first time (created)');
 		
+		
+		/**
+		 * Para remover as setas de navegação 
+		 * das questões de cada questionário
+		 **/
 		setTimeout(function(){
 			currentPage = phonon.navigator().currentPage;
-			console.log( currentPage );
+			//console.log( currentPage );
 			$( currentPage +' .swiper-button-next, '+ currentPage +' .swiper-button-prev' ).hide();
-		}, 1500);
+		}, 4000);
 	});
 	
 });
+
+
+/**
+ * Retorna a data atual no formato 
+ * AAAA-MM-DD
+ **/
+function getDia(){
+	
+	dia = new Date();
+	m = parseInt( dia.getMonth() + 1 );
+	d = dia.getDate();
+	mes = ( m < 10 )? '0'+ m:m; // caso o mês seja menor que 10
+	d = ( d < 10 )? '0'+ d:d; // caso o dia seja menor que 10
+	return dia.getFullYear() +'-'+ mes +'-'+ d;
+}
+
+
+
 
 var mySwiper = '';
 
