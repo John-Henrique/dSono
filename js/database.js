@@ -74,7 +74,7 @@ function criaTabelas(){
 	/**
 	 * Verifica se a atividade já foi registrada 
 	 * no dia selecionado
-	 * @date 2017-05-28
+	 * @date 2017-05-28 00:00
 	 * */
 	function atividade_existe( data_hora, atividade ){
 		
@@ -82,7 +82,7 @@ function criaTabelas(){
 			
 			tx.executeSql(  "SELECT ID "+
 							"FROM ds_posts "+
-							"WHERE STRFTIME( '%Y-%m-%d', post_date )=? "+
+							"WHERE STRFTIME( '%Y-%m-%d %H:%M', post_date )=? "+
 							"AND post_title=? "+
 							"AND post_type='diario' "+
 							"LIMIT 3 "
@@ -95,7 +95,7 @@ function criaTabelas(){
 				sessionStorage.setItem( 'registros', parseInt( parseInt( sessao ) + 1 ) );
 				
 				if( quantidade > 0 ){
-					//console.log( "Update "+ data_hora );
+					console.log( "Update "+ data_hora +' ID: '+ res.rows.item(0).ID );
 					tx.executeSql('UPDATE ds_posts SET post_type=?, post_title=?, post_date=?, post_status=? WHERE post_date=?', ['diario', atividade, data_hora, 'publish', data_hora]);
 				}else{
 					
@@ -213,7 +213,7 @@ function criaTabelas(){
 					
 					for( i=0; i < quantidade; i++ ){
 						
-						console.log( res.rows.item( i ).option_name +' '+ res.rows.item( i ).option_value );
+						//console.log( res.rows.item( i ).option_name +' '+ res.rows.item( i ).option_value );
 						$( 'configuracoes input[name="'+ res.rows.item( i ).option_name +'"' ).val( res.rows.item( i ).option_value );
 					}
 					
@@ -259,21 +259,28 @@ function criaTabelas(){
 			function( tx, res ){
 					
 				quantidade = res.rows.length;
-				phonon.notif( "quantidade "+ quantidade, 3000, false );
+				//phonon.notif( "quantidade "+ quantidade +" "+ data, 3000, false );
 				
 				if( quantidade > 0 ){
 					
 					for( i=0; i < quantidade; i++ ){
 						
+						titulo = '';
+						
 						li = $( 'diario-atividade li[data-hora="hora-'+ res.rows.item( i ).hora1 +'"]' );
 						
-						li.find( 'a:first' ).addClass( 'icon-'+ res.rows.item( i ).post_title );
-						console.log( res.rows.item( i ).hora1 +' '+ res.rows.item( i ).post_title );
+						// adiciona o icone
+						li.find( 'a:first' ).removeClass( li.find( 'a:first' ).prop( 'class' ) ).addClass( 'pull-right icon icon-'+ res.rows.item( i ).post_title.replace( ' ', '-' ).replace( 'í', 'i' ) );
+						//console.log( res.rows.item( i ).hora1 +' '+ res.rows.item( i ).post_title );
 						
-						if( res.rows.item( i ).post_title != "" ){
-							console.log( "title "+ res.rows.item( i ).post_title );
-							li.find( 'a:last span' ).text( ' - '+ res.rows.item( i ).post_title );
+						if( res.rows.item( i ).post_title != " " ){
+							// adiciona o nome da atividade
+							//console.log( res.rows.item( i ).hora1 +" "+ res.rows.item( i ).post_title +' '+ typeof( res.rows.item( i ).post_title ) );
+							
+							titulo = '- '+ res.rows.item( i ).post_title;
 						}
+						
+						li.find( 'a:last span' ).text( ' '+ titulo );
 					}
 					
 				}else{
@@ -1136,6 +1143,23 @@ function showCount() {
 	
     transaction.executeSql('SELECT count(*) AS recordCount FROM ds_posts', [], function(ignored, resultSet) {
       navigator.notification.alert('ds_posts COUNT: ' + resultSet.rows.item(0).recordCount);
+    });
+	
+	data = sessionStorage.getItem( 'data' );//AND STRFTIME( "%Y-%m-%d", post_date )="'+ data +'
+    transaction.executeSql('SELECT * FROM ds_posts WHERE post_type="diario" ORDER BY post_date ASC ', [], function(ignored, res) {
+		quantidade = res.rows.length;
+		if( quantidade > 0 ){
+			
+			html = '';
+			
+			for( i=0; i < quantidade; i++ ){
+				
+				html = html +"<li>"+ res.rows.item( i ).post_date +' '+ res.rows.item( i ).post_title +"</li>";
+			}
+			
+			$( '.registros' ).html( html );
+		}
+		
     });
 	
   }, function(error) {

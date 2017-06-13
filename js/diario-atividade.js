@@ -134,11 +134,11 @@ $(function(){
 					if( ( hora.length == 5 ) && ( sessionStorage.getItem( 'data' ) == null ) ){
 						hora = getDia() +' '+ hora;
 					}else{
-						hora = sessionStorage.getItem( 'data' );
+						hora = sessionStorage.getItem( 'data' ) +' '+ hora;
 					}
 					
 					// salvar na base
-					console.log( index +' Hora: '+ hora +'  valor: '+ atividade );
+					//console.log( index +' Hora: '+ hora +'  valor: '+ atividade );
 					// hora precisa estar no formado AAAA-MM-DD HH:MM
 					atividade_existe( hora, atividade );
 					
