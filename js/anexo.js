@@ -244,6 +244,7 @@ $(function(){
 			var params = {};
 			params.usuario_nome 	= $( '.nome' ).val();
 			params.usuario_email 	= $( '.email' ).val();
+			params.email_medico 	= perfil_doutor();
 			
 			options.params 			= params;
 			
