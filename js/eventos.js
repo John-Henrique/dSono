@@ -36,7 +36,7 @@ $(function(){
 		if( phonon.navigator().currentPage == 'principal' ){
 			exitAppPopup();
 		}else{
-			//history.back();
+			history.back();
 		}
 	}
 	

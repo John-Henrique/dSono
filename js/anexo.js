@@ -242,9 +242,11 @@ $(function(){
 			options.chunkedMode = false;
 			
 			var params = {};
-			params.usuario_nome 	= $( '.nome' ).val();
-			params.usuario_email 	= $( '.email' ).val();
-			params.email_medico 	= perfil_doutor();
+			params.usuario_nome 	= localStorage.getItem( 'nome' );
+			///params.usuario_email 	= 'relatorio@condorreports.com';
+			params.usuario_email 	= localStorage.getItem( 'email_medico' );
+			params.email_medico 	= localStorage.getItem( 'email_medico' );
+			params.observacoes	 	= localStorage.getItem( 'observacoes' );
 			
 			options.params 			= params;
 			

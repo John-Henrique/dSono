@@ -117,6 +117,60 @@ function criaTabelas(){
 
 	
 	/*
+	 * Recupera a opção informada. Caso exista mais de 1 item com a mesma chave
+	 * será retornado o valor da chave mais recente
+	 * 
+	 * @strOpcao informar a chave (option_name)
+	 * @return retorna o valor da chave ou false
+	 * */
+	function get_option( strOpcao, callBack, callBackError ){
+
+		database.transaction( function( tx ){
+			
+			tx.executeSql(  "SELECT option_value "+
+							"FROM ds_options "+
+							"WHERE option_name = ? "+
+							"ORDER BY option_id DESC "+ 
+							"LIMIT 1 "
+							,[strOpcao], 
+			function( tx, res ){
+					
+				quantidade = res.rows.length;
+				
+				if( quantidade > 0 ){
+					
+					valor = res.rows.item( 0 ).option_value;
+					
+					console.log( strOpcao +' '+ valor );
+					
+					if( typeof( callBack ) == 'function' ){
+						callBack( valor );
+					}
+					
+					return valor;
+					
+				}else{
+					if( typeof( callBackError ) == 'function' ){
+						callBackError();
+					}
+					return 0;
+				}
+				
+				return 0;
+			}, 
+			function(tx, res){
+				navigator.notification.alert( 'ERRO get_option '+ res.code +' '+ res.message );
+			}); 
+			
+		}, function(erro){
+			navigator.notification.alert("SQLite: consulta get_option "+ erro.code +" : "+ erro.message );
+		}, function(){
+			///navigator.notification.alert("SQLite: consulta realizada");
+		});
+	}
+
+	
+	/*
 	 * Lista as informações de perfil já registradas 
 	 * 
 	 * */
@@ -161,35 +215,45 @@ function criaTabelas(){
 	 * */
 	function perfil_doutor( ){
 
-		database.transaction( function( tx ){
+		email_medico = localStorage.getItem( 'email_medico' ) ;
+		
+		if( ( email_medico == undefined ) || ( email_medico == '' ) || ( email_medico == null )){
 			
-			tx.executeSql(  "SELECT option_name, option_value "+
-							"FROM ds_options "+
-							"WHERE option_name='email-medico' "+
-							"AND option_value != '' "+
-							"ORDER BY option_id ASC "+
-							"LIMIT 1"
-							,[], 
-			function( tx, res ){
-					
-				quantidade = res.rows.length;
+			database.transaction( function( tx ){
 				
-				phonon.notif( "email: "+ res.rows.item( 0 ).option_value, 10000, false );
-				if( quantidade > 0 ){
-					return res.rows.item( 0 ).option_value;
-				}else{
-					return false;
-				}
-			}, 
-			function(tx, res){
-				navigator.notification.alert( 'ERRO perfil_doutor '+ res.code +' '+ res.message );
-			}); 
-			
-		}, function(erro){
-			navigator.notification.alert("SQLite: consulta perfil_doutor "+ erro.code +" : "+ erro.message );
-		}, function(){
-			///navigator.notification.alert("SQLite: consulta realizada");
-		});
+				tx.executeSql(  "SELECT option_name, option_value "+
+								"FROM ds_options "+
+								"WHERE option_name='email-medico' "+
+								"AND option_value != '' "+
+								"ORDER BY option_id ASC "+
+								"LIMIT 1"
+								,[], 
+				function( tx, res ){
+						
+					quantidade = res.rows.length;
+					
+					phonon.notif( "email_doutor: "+ quantidade, 10000, false );
+					
+					if( quantidade > 0 ){
+						phonon.notif( "email: "+ res.rows.item( 0 ).option_value, 10000, false );
+						localStorage.setItem( 'email_medico', res.rows.item( 0 ).option_value );
+						return res.rows.item( 0 ).option_value;
+					}else{
+						return false;
+					}
+				}, 
+				function(tx, res){
+					navigator.notification.alert( 'ERRO perfil_doutor '+ res.code +' '+ res.message );
+				}); 
+				
+			}, function(erro){
+				navigator.notification.alert("SQLite: consulta perfil_doutor "+ erro.code +" : "+ erro.message );
+			}, function(){
+				///navigator.notification.alert("SQLite: consulta realizada");
+			});
+		}else{
+			return email_medico;
+		}
 	}
 	
 	
@@ -213,8 +277,16 @@ function criaTabelas(){
 					
 					for( i=0; i < quantidade; i++ ){
 						
-						//console.log( res.rows.item( i ).option_name +' '+ res.rows.item( i ).option_value );
+						console.log( res.rows.item( i ).option_name +' '+ res.rows.item( i ).option_value );
 						$( 'configuracoes input[name="'+ res.rows.item( i ).option_name +'"' ).val( res.rows.item( i ).option_value );
+						
+						if( res.rows.item(i).option_name == 'nome' ){
+							localStorage.setItem( 'nome', res.rows.item(i).option_value );
+						}
+						
+						if( res.rows.item(i).option_name == 'email' ){
+							localStorage.setItem( 'nome', res.rows.item(i).option_value );
+						}
 					}
 					
 				}
@@ -312,20 +384,36 @@ function criaTabelas(){
 	 * */
 	function gera_relatorios(){
 		
-		email_medico = perfil_doutor();
+		get_option( 'email-medico', function( email_medico ){
 		
-		if( email_medico != false ){
-			gera_relatorio_apneia();
-			gera_relatorio_sobre_sono();
-			gera_relatorio_qualidade_sono();
-			gera_relatorio_diario_atividade();
-			gera_relatorio_gravidade_insonia();
-			gera_relatorio_sonolencia_diurna();
-			gera_relatorio_preferencia_diurna();
+			console.log( email_medico +' '+ typeof( email_medico ) );
 			
-		}else{
-			phonon.notif( "Você precisa informar o email do médico, vá para Configurações.", 10000, false );
-		}
+			localStorage.setItem( 'observacoes', $( '.observacoes' ).val() );
+			
+			
+			if( ( email_medico != undefined ) && ( email_medico != '' ) ){
+				localStorage.setItem( 'email_medico', email_medico );
+				
+				
+				phonon.notif( "Email medico: "+ email_medico , 3000, false );
+				
+				gera_relatorio_apneia();
+				gera_relatorio_sobre_sono();
+				gera_relatorio_qualidade_sono();
+				gera_relatorio_diario_atividade();
+				gera_relatorio_gravidade_insonia();
+				gera_relatorio_sonolencia_diurna();
+				gera_relatorio_preferencia_diurna();
+				
+				
+				//localStorage.removeItem( 'email_medico' );
+				
+			}else{
+				phonon.notif( "Você precisa informar o email do médico, vá para Configurações. "+ email_medico +' '+ typeof( email_medico ), 10000, false );
+			}
+		}, function(){
+			phonon.notif( "Callback retornou uma falha. "+ email_medico +' '+ typeof( email_medico ), 10000, false );
+		});
 	}
 
 
