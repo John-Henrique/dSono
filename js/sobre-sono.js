@@ -49,17 +49,17 @@ $(function(){
 		
 		
 		respostas: function(){
-			hora = '';
+			hora = $( '.sobre-1' ).val();
 			radio = '';
 					
 			// Se hora possuir apenas 5 digitos
-			if( hora.length == 5 ){
-				d = new Date();
-				hora = d.getFullYear() +'-'+ parseInt( d.getMonth() + 1 ) +'-'+ d.getDate();
+			if( hora.length >= 5 ){
+				hora = getDia() +' '+ hora +':00';
 			}
 			
+			console.log( "hora "+ hora );
 			
-			$.each( $( '.questao' ), function( index, valor ){
+			$.each( $( 'sobre .questao' ), function( index, valor ){
 				
 				$.each( $( valor ).find( 'input' ), function( index, valor ){
 					
@@ -75,20 +75,30 @@ $(function(){
 						if( elem.prop( 'type' ) == 'radio' || elem.prop( 'type' ) == 'select' ){
 							
 							resposta = $( 'input[name='+ elem.prop( 'name' ) +']:checked' ).val();
-							
+							/*
 							console.log( radio );
 							console.log( resposta );
-							
-							sobre_sono_salvar( hora, radio, resposta );
+							*/
+							//sobre_sono_salvar( hora, radio, resposta );
+							cpt_adicionar( hora, 'sobre-o-sono', radio, resposta );
 						}else{
 							// campos de texto, numeros, datas, horas e caixas de textos
 							
 							resposta = elem.val();
 							
+							/**
+							 * Os campos de hora no questionário 
+							 * sobre o sono precisam ter o dia 
+							 * */
+							if( elem.prop( 'type' ) == 'time' ){
+								resposta = getDia() +' '+ resposta +':00';
+							}
+							/*
 							console.log( radio );
 							console.log( resposta );
-							
-							sobre_sono_salvar( hora, radio, resposta );
+							*/
+							//sobre_sono_salvar( hora, radio, resposta );
+							cpt_adicionar( hora, 'sobre-o-sono', radio, resposta );
 						}
 						
 					}// fim do if elem.prop( 'name' )

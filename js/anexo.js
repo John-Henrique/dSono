@@ -141,7 +141,7 @@ $(function(){
 		/**
 		 * Localiza o arquivo de relatório
 		 **/
-		arquivo: function(){
+		arquivo: function( arquivos, callback ){
 			
 			
 			document.addEventListener( 'deviceready', function(){
@@ -154,8 +154,9 @@ $(function(){
 					//window.resolveLocalFileSystemURL( cordova.file.externalRootDirectory, function (dirEntry) {
 					//dirEntry = cordova.file.externalRootDirectory;
 					dirEntry = fs.root;
-					dados = parseInt( new Date().getMonth() + 1) + new Date().getFullYear();
-					
+					//dados = parseInt( new Date().getMonth() + 1) + new Date().getFullYear();
+					myFiles = [];
+					/*
 					arquivos = [
 						"apneia-"+ dados +".txt",
 						"atividade-"+ dados +".txt",
@@ -165,17 +166,26 @@ $(function(){
 						"sobre-sono-"+ dados +".txt",
 						"sonolencia-diurna-"+ dados +".txt",
 					];
+					 * */
 					$.each( arquivos, function( index, arquivo ){
+						
+						arquivo = arquivo +'.txt';
 						
 						dirEntry.getFile( "Diariodosono/"+ arquivo, { create: true, exclusive: false }, function (fileEntry){
 							
 							anexo.upload( fileEntry, cordova.file.externalRootDirectory +"Diariodosono/"+ arquivo );
+							//myFiles.push( cordova.file.externalRootDirectory +"Diariodosono/"+ arquivo );
 							
 						}, function(e){
 							alert( "erro ao localizar arquivo "+ JSON.stringify( e ) );
 						});
 						
 					});
+					
+					
+					if( typeof( callback ) == 'function' ){
+						//callback( fileEntry, myFiles );
+					}
 					
 				}, function(){
 					alert( "erro permissão");

@@ -29,6 +29,9 @@ app.on({page: 'principal', preventClose: false, content: 'principal.html', ready
 		  $('#add-record').click(addRecord);
 		  $('#add-json-records-after-delay').click(addJSONRecordsAfterDelay);
 		  $('#delete-records').click(deleteRecords);
+		  $('.delete-cpt').click(function(){
+			  deleteRecordsFromCpt( $( this ).prop( 'id' ) );
+		  });
 		  $('#delete-database').click(deleteDatabase);
 		  $('#location-page2').click(goToPage2);
 		  $('#exportar-db').click();
@@ -281,5 +284,8 @@ if( lang ){
 	phonon.updateLocale( lang );
 }
 
-// Let's go!
-app.start();
+
+$(function(){
+	// Let's go!
+	app.start();
+});

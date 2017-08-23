@@ -8,37 +8,37 @@ $(function(){
 			$( 'qualidade-sono input' ).click( function(){
 				
 				// mostra o campo comentario caso a opção SIM esteja marcada na questão 18
-				if( $( ' .questao-18' ).is( ':checked' ) ){
-					$( ' .questao-18-comentario' ).slideDown();
+				if( $( 'qualidade-sono .questao-18' ).is( ':checked' ) ){
+					$( 'qualidade-sono .questao-18-comentario' ).slideDown();
 				}else{
-					$( ' .questao-18-comentario' ).slideUp();
+					$( 'qualidade-sono .questao-18-comentario' ).slideUp();
 				}
 			});
 			
 			
 			$( '.content' ).click( function(){
-				q1 = $( ' .questao-1' ).is( ':checked' );
-				q2 = $( ' .questao-2' ).is( ':checked' );
-				q3 = $( ' .questao-3' ).is( ':checked' );
-				q4 = $( ' .questao-4' ).is( ':checked' );
+				q1 = $( ' .questao-1' ).val();
+				q2 = $( ' .questao-2' ).val();
+				q3 = $( ' .questao-3' ).val();
+				q4 = $( ' .questao-4' ).val();
 				q5 = $( ' .questao-5' ).is( ':checked' );
 				q6 = $( ' .questao-6' ).is( ':checked' );
 				q7 = $( ' .questao-7' ).is( ':checked' );
-				q8 = $( ' .questao-7' ).is( ':checked' );
-				q9 = $( ' .questao-7' ).is( ':checked' );
-				q10 = $( ' .questao-7' ).is( ':checked' );
-				q11 = $( ' .questao-7' ).is( ':checked' );
-				q12 = $( ' .questao-7' ).is( ':checked' );
-				q13 = $( ' .questao-7' ).is( ':checked' );
-				q14 = $( ' .questao-7' ).is( ':checked' );
-				q15 = $( ' .questao-7' ).is( ':checked' );
-				q16 = $( ' .questao-7' ).is( ':checked' );
-				q17 = $( ' .questao-7' ).is( ':checked' );
-				q18 = $( ' .questao-7' ).is( ':checked' );
-				q19 = $( ' .questao-7' ).is( ':checked' );
-				q20 = $( ' .questao-7' ).is( ':checked' );
+				q8 = $( ' .questao-8' ).is( ':checked' );
+				q9 = $( ' .questao-9' ).is( ':checked' );
+				q10 = $( ' .questao-10' ).is( ':checked' );
+				q11 = $( ' .questao-11' ).is( ':checked' );
+				q12 = $( ' .questao-12' ).is( ':checked' );
+				q13 = $( ' .questao-13' ).is( ':checked' );
+				q14 = $( ' .questao-14' ).is( ':checked' );
+				q15 = $( ' .questao-15' ).is( ':checked' );
+				q16 = $( ' .questao-16' ).is( ':checked' );
+				q17 = $( ' .questao-17' ).is( ':checked' );
+				q18 = $( ' .questao-18' ).is( ':checked' );
+				q19 = $( ' .questao-19' ).is( ':checked' );
+				q20 = $( ' .questao-20' ).is( ':checked' );
 				
-				if( ( $( '.swiper-button-next' ).hasClass( 'swiper-button-disabled' ) ) && ( q1 ) && ( q2 ) && ( q3 ) && ( q4 ) && ( q5 ) && ( q6 ) && ( q7 ) && ( q8 ) && ( q9 ) && ( q10 ) && ( q11 ) && ( q12 ) && ( q13 ) && ( q14 ) && ( q15 ) && ( q16 ) && ( q17 ) && ( q18 ) && ( q19 ) && ( q20 ) ){
+				if( ( $( '.swiper-button-next' ).hasClass( 'swiper-button-disabled' ) ) && ( q1 != '' ) && ( q2 != '' ) && ( q3 != '' ) && ( q4 != '' ) && ( q5 ) && ( q6 ) && ( q7 ) && ( q8 ) && ( q9 ) && ( q10 ) && ( q11 ) && ( q12 ) && ( q13 ) && ( q14 ) && ( q15 ) && ( q16 ) && ( q17 ) && ( q18 ) && ( q19 ) && ( q20 ) ){
 					$( 'qualidade-sono .btn-salvar' ).show();
 				}else{
 					$( 'qualidade-sono .btn-salvar' ).hide();
@@ -57,17 +57,11 @@ $(function(){
 		
 		
 		respostas: function(){
-			hora = '';
+			hora = getDia() +' 00:00:11';
 			radio = '';
 					
-			// Se hora possuir apenas 5 digitos
-			if( hora.length == 5 ){
-				d = new Date();
-				hora = d.getFullYear() +'-'+ parseInt( d.getMonth() + 1 ) +'-'+ d.getDate();
-			}
 			
-			
-			$.each( $( '.questao' ), function( index, valor ){
+			$.each( $( 'qualidade-sono .questao' ), function( index, valor ){
 				
 				$.each( $( valor ).find( 'input' ), function( index, valor ){
 					
@@ -81,13 +75,14 @@ $(function(){
 						
 						// campos de radio, checagem e select
 						if( elem.prop( 'type' ) == 'radio' || elem.prop( 'type' ) == 'select' ){
-							
+							//console.log( elem.prop( 'class' ) );
 							resposta = $( 'input[name='+ elem.prop( 'name' ) +']:checked' ).val();
 							
 							console.log( radio );
 							console.log( resposta );
 							
-							qualidade_sono_salvar( hora, radio, resposta );
+							///  qualidade_sono_salvar( hora, radio, resposta );
+							cpt_adicionar( hora, 'qualidade-sono', radio, resposta );
 						}else{
 							// campos de texto, numeros, datas, horas e caixas de textos
 							
@@ -96,7 +91,8 @@ $(function(){
 							console.log( radio );
 							console.log( resposta );
 							
-							qualidade_sono_salvar( hora, radio, resposta );
+							//qualidade_sono_salvar( hora, radio, resposta );
+							cpt_adicionar( hora, 'qualidade-sono', radio, resposta );
 						}
 						
 					}// fim do if elem.prop( 'name' )
@@ -104,8 +100,8 @@ $(function(){
 			});
 			
 			
-			phonon.notif( "Dados salvos com sucesso", 3000, false );
 			phonon.navigator().changePage( 'qualidade' );
+			phonon.notif( "Dados salvos com sucesso", 3000, false );
 		}
 		
 		

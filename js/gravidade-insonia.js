@@ -35,17 +35,12 @@ $(function(){
 		
 		
 		respostas: function(){
-			hora = '';
+			hora = getDia() +' 00:00:11';
 			radio = '';
 					
-			// Se hora possuir apenas 5 digitos
-			if( hora.length == 5 ){
-				d = new Date();
-				hora = d.getFullYear() +'-'+ parseInt( d.getMonth() + 1 ) +'-'+ d.getDate();
-			}
 			
 			
-			$.each( $( '.questao' ), function( index, valor ){
+			$.each( $( 'gravidade-insonia .questao' ), function( index, valor ){
 				
 				$.each( $( valor ).find( 'input' ), function( index, valor ){
 					
@@ -65,7 +60,8 @@ $(function(){
 							console.log( radio );
 							console.log( resposta );
 							
-							gravidade_insonia_salvar( hora, radio, resposta );
+							//gravidade_insonia_salvar( hora, radio, resposta );
+							cpt_adicionar( hora, 'gravidade-insonia', radio, resposta );
 						}else{
 							// campos de texto, numeros, datas, horas e caixas de textos
 							
@@ -74,7 +70,8 @@ $(function(){
 							console.log( radio );
 							console.log( resposta );
 							
-							gravidade_insonia_salvar( hora, radio, resposta );
+							//gravidade_insonia_salvar( hora, radio, resposta );
+							cpt_adicionar( hora, 'gravidade-insonia', radio, resposta );
 						}
 						
 					}// fim do if elem.prop( 'name' )

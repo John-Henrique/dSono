@@ -132,7 +132,7 @@ $(function(){
 					
 					// Se hora possuir apenas 5 digitos
 					if( ( hora.length == 5 ) && ( sessionStorage.getItem( 'data' ) == null ) ){
-						hora = getDia() +' '+ hora;
+						hora = getDia() +' '+ hora +':00';
 					}else{
 						hora = sessionStorage.getItem( 'data' ) +' '+ hora;
 					}
@@ -140,12 +140,17 @@ $(function(){
 					// salvar na base
 					//console.log( index +' Hora: '+ hora +'  valor: '+ atividade );
 					// hora precisa estar no formado AAAA-MM-DD HH:MM
-					atividade_existe( hora, atividade );
+					//atividade_existe( hora, atividade );
+					
+					/**
+					 * Novo método, mais flexivel
+					 * */
+					cpt_adicionar( hora, 'diario', str[0], atividade );
 					
 				});
 				
 				phonon.notif( "Diário atualizado", 3000, false );
-				//phonon.navigator().changePage( 'principal' );
+				phonon.navigator().changePage( 'principal' );
 
 			});
 			

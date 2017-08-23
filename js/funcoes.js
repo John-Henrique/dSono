@@ -33,6 +33,15 @@ function getDia(){
 }
 
 
+/**
+ * Retorna somente a data sem hora
+ * */
+function separaDia( strData ){
+	strData = strData.split(' ');
+	
+	return strData[0];
+}
+
 
 
 var mySwiper = '';
